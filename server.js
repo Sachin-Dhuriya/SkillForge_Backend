@@ -21,6 +21,9 @@ app.use("/api/auth", authRoutes);
 //--ProfileRoutes---
 import profileRoutes from "./src/routes/profileRoutes.js";
 app.use("/api/profile", profileRoutes);
+//--Course--
+import courseRoutes from './src/routes/courseRoutes.js'
+app.use('/api/course', courseRoutes)
 
 app.get("/trial", (req, res, next) => {
   try {

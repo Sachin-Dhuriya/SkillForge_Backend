@@ -14,4 +14,18 @@ model User {
   password String
   role    String  @default("student")
   createdAt DateTime @default(now())
+  courses Course[] @relation("InstructorCourses")
+}
+
+model Course {
+  id          Int   @id @default(autoincrement())
+  title       String
+  description String
+  price       Float
+  category    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  instructorId  Int
+  instructor    User  @relation("InstructorCourses", fields: [instructorId], references: [id])
 }
