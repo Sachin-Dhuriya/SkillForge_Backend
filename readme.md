@@ -1,4 +1,4 @@
-# 🧠 SkillForge Backend API
+# 🧠 SkillForge Backend API (Ongoing)
 
 A backend for an online learning platform built using **Node.js**, **Express**, **Prisma ORM**, and **PostgreSQL**.  
 It supports **user authentication**, **instructor-based course management**, and **secure CRUD operations**.
@@ -60,8 +60,8 @@ SkillForge_Backend/
 | `POST` | `/api/course/add` | Instructor adds a new course |
 | `GET` | `/api/course/all` | Fetch all available courses (Public) |
 | `GET` | `/api/course/:id` | Get specific course by ID (Public) |
-| `PUT` | `/api/course/:id` | Instructor updates their own course |
-| `DELETE` | `/api/course/:id` | Instructor deletes their own course |
+| `PUT` | `/api/course/:id/edit` | Instructor updates their own course |
+| `DELETE` | `/api/course/:id/delete` | Instructor deletes their own course |
 
 ---
 

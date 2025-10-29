@@ -125,4 +125,55 @@ const deleteCourse = async (req, res, next) => {
   }
 };
 
-export { addCourse, allCourse, selectedCourse, deleteCourse };
+const editCourse = async (req, res, next) => {
+  try {
+    if (req.user.role !== "instructor")
+      return res.status(400).json({ message: "Unauthorize Access" });
+
+    const courseId = Number(req.params.id);
+
+    let course = await prisma.Course.findUnique({
+      where: { id: courseId },
+    });
+    if (!course)
+      return res.status(404).json({ message: "Couurse does not exist..!!!" });
+
+    if (course.instructorId != req.user.id)
+      return res.status(400).json({
+        message:
+          "You cannot edit this course because this course does not belong to you",
+      });
+
+    let { error } = courseValidator.validate(req.body);
+    if (error)
+      return res.status(400).json({ message: error.details[0].message });
+
+    let { title, description, price, category } = req.body;
+
+    const updatedCourse = await prisma.Course.update({
+      where: { id: courseId },
+      data: {
+        title,
+        description,
+        price: parseFloat(price),
+        category,
+      },
+      include: {
+        instructor: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    res
+      .status(200)
+      .json({ message: "Course Edited Successfully", updatedCourse });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { addCourse, allCourse, selectedCourse, deleteCourse, editCourse };
